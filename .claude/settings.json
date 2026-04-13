@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__pubmed__search",
+      "mcp__pubmed__fetch",
+      "mcp__pubmed__related",
+      "mcp__pubmed__mesh_terms"
+    ]
+  },
+  "mcpServers": {
+    "pubmed": {
+      "command": "npx",
+      "args": ["-y", "pubmed-mcp-server"],
+      "env": {
+        "NCBI_API_KEY": "${NCBI_API_KEY}"
+      }
+    }
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "mcp__pubmed__search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[ClinicalResearch] PubMed search completed — verify MeSH terms and filter criteria before drawing conclusions.'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[ClinicalResearch] Reminder: ensure statistical code includes assumption checks (normality, proportional hazards, etc).'"
+          }
+        ]
+      }
+    ]
+  }
+}

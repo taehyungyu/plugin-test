@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "pubmed": {
+      "command": "npx",
+      "args": ["-y", "pubmed-mcp-server"],
+      "env": {
+        "NCBI_API_KEY": "${NCBI_API_KEY}"
+      }
+    }
+  }
+}
