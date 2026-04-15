@@ -69,6 +69,43 @@ A PubMed MCP server is configured. Use it to search literature, fetch abstracts,
 - Mendelian Randomization → STROBE-MR
 - Bayesian Analysis → ROBUST (Reporting Of Bayes Used in clinical STudies)
 
+## Skills Library
+
+Reusable, task-specific playbooks live under `skills/<name>/SKILL.md`. Each
+file has YAML frontmatter (`name`, `description`) and a detailed procedure.
+Read the relevant skill before executing a task — the skill specifies input
+format, method selection, assumption checks, template code, and output spec.
+
+| Phase | Skill | Purpose |
+|-------|-------|---------|
+| Planning | `pico-extract` | Extract PICO/PICOS from a research question |
+| Planning | `pubmed-search` | Structured PubMed search with MeSH terms |
+| Planning | `study-design` | Recommend a study design with justification |
+| Planning | `sample-size` | Sample size / power calculation |
+| Planning | `protocol-review` | SPIRIT compliance + regulatory gap review |
+| Analysis | `stat-rct` | RCT analysis: ITT, ANCOVA, MMRM, multiplicity |
+| Analysis | `stat-cohort` | Cohort study: RR, IRR, HR, propensity score |
+| Analysis | `stat-case-control` | OR, conditional logistic, Mantel-Haenszel |
+| Analysis | `stat-diagnostic` | Se/Sp, ROC/AUC, DCA, STARD |
+| Analysis | `stat-survival` | KM, Cox, RMST, competing risks |
+| Analysis | `stat-propensity` | PSM, IPTW, AIPW, E-value |
+| Analysis | `stat-ml-model` | ML prediction models (TRIPOD) |
+| Analysis | `stat-longitudinal` | MMRM, LMM, GLMM, GEE |
+| Analysis | `stat-bayesian` | Bayesian trials / PyMC / CrI / P(benefit) |
+| Analysis | `stat-mediation` | Mediation (ACME), interaction, subgroups |
+| Analysis | `stat-omics` | DE, WGCNA, GSEA, MR, metabolomics |
+| Synthesis | `systematic-review` | PRISMA 2020 protocol |
+| Synthesis | `meta-analysis` | Fixed/random effects, heterogeneity, NMA |
+| QA | `bias-assessment` | RoB 2, ROBINS-I, QUADAS-2, Newcastle-Ottawa |
+| QA | `reporting-checklist` | CONSORT, STROBE, STARD, PRISMA, TRIPOD |
+
+Invocation:
+- **Claude Code**: `/pubmed-search ...` (auto-discovered via `.claude/skills/`).
+- **Cursor**: reference the skill file (e.g. `@skills/stat-rct/SKILL.md`), or
+  rely on `.cursor/rules/skills-index.mdc` to surface matches.
+- **Codex**: read the relevant `skills/<name>/SKILL.md` for the task at hand
+  (Codex does not auto-invoke skills; load the file into context as needed).
+
 ## Workflow
 
 1. Clarify research question using PICO/PICOS framework

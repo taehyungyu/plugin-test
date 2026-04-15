@@ -1,6 +1,11 @@
-# Clinical Research Harness for Claude Code
+# Clinical Research Harness
 
-A plug-and-play clinical research toolkit for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Clone this repo and get **20 specialized slash commands** covering the full lifecycle of a clinical study — from PICO framing to statistical analysis to manuscript reporting.
+A plug-and-play clinical research toolkit that works across
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code),
+[Cursor](https://cursor.sh), and [Codex CLI](https://github.com/openai/codex).
+Clone this repo and get **20 specialized skills** covering the full lifecycle
+of a clinical study — from PICO framing to statistical analysis to manuscript
+reporting.
 
 ## Quick Start
 
@@ -23,17 +28,22 @@ claude
 
 ## How It Works
 
-When you run `claude` inside this repo, Claude Code automatically loads:
+All 20 clinical skills live in `skills/<name>/SKILL.md` (single source of
+truth). Each supported tool is wired to the same files:
 
-| File | What It Does |
-|------|-------------|
-| `CLAUDE.md` | System instructions — makes Claude a clinical research specialist |
-| `.claude/commands/*.md` | 20 slash commands available as `/command-name` |
-| `.claude/settings.json` | PubMed MCP server + hooks for quality reminders |
-| `AGENTS.md` | Detailed statistical method reference for agent reasoning |
-| `subagents/` | Specialized agent definitions (statistician, reviewer, protocol checker) |
+| Tool | Entry point | Skill discovery |
+|------|-------------|-----------------|
+| **Claude Code** | `CLAUDE.md` + `.claude/settings.json` | `.claude/skills/` symlinks to `skills/` — invoke as `/skill-name` |
+| **Cursor** | `.cursor/rules/*.mdc` + `.cursor/mcp.json` | `.cursor/rules/skills-index.mdc` catalogs all skills — reference via `@skills/<name>/SKILL.md` |
+| **Codex CLI** | `AGENTS.md` | Skills catalog embedded in `AGENTS.md` — read `skills/<name>/SKILL.md` as needed |
 
-No installation, no dependencies, no configuration. Just `git clone` and `claude`.
+Shared assets:
+- `CLAUDE.md` / `AGENTS.md` — system instructions (auto-loaded by the tool)
+- `skills/` — 20 portable skill playbooks, each with input spec, method selection, template code, output spec
+- `subagents/` — specialized agent definitions (statistician, reviewer, protocol checker)
+- `.claude/settings.json` — PubMed MCP server + Claude Code quality-reminder hooks
+
+No installation, no dependencies. Just `git clone` and start your tool of choice.
 
 ## Skill Catalog (20 Commands)
 
@@ -113,41 +123,45 @@ Output: - PS distribution overlap plot
 
 ```
 clinical-research-harness/
-├── CLAUDE.md                      # Core system prompt + skill selection guide
-├── AGENTS.md                      # Detailed statistical method reference
+├── CLAUDE.md                      # Claude Code system prompt + skill selection
+├── AGENTS.md                      # Codex CLI system prompt + skill catalog
+├── skills/                        # ★ Portable skills (single source of truth)
+│   ├── pico-extract/SKILL.md
+│   ├── pubmed-search/SKILL.md
+│   ├── study-design/SKILL.md
+│   ├── sample-size/SKILL.md
+│   ├── protocol-review/SKILL.md
+│   ├── stat-rct/SKILL.md
+│   ├── stat-cohort/SKILL.md
+│   ├── stat-case-control/SKILL.md
+│   ├── stat-diagnostic/SKILL.md
+│   ├── stat-survival/SKILL.md
+│   ├── stat-propensity/SKILL.md       # Causal inference
+│   ├── stat-ml-model/SKILL.md         # ML prediction models
+│   ├── stat-longitudinal/SKILL.md     # Mixed models / MMRM
+│   ├── stat-bayesian/SKILL.md         # Bayesian analysis
+│   ├── stat-mediation/SKILL.md        # Mediation & interaction
+│   ├── stat-omics/SKILL.md            # Multi-omics / bioinformatics
+│   ├── meta-analysis/SKILL.md
+│   ├── systematic-review/SKILL.md
+│   ├── bias-assessment/SKILL.md
+│   └── reporting-checklist/SKILL.md
 ├── .claude/
-│   ├── commands/                  # 20 slash command definitions
-│   │   ├── pico-extract.md
-│   │   ├── pubmed-search.md
-│   │   ├── study-design.md
-│   │   ├── sample-size.md
-│   │   ├── stat-rct.md
-│   │   ├── stat-cohort.md
-│   │   ├── stat-case-control.md
-│   │   ├── stat-diagnostic.md
-│   │   ├── stat-survival.md
-│   │   ├── stat-propensity.md     # Causal inference
-│   │   ├── stat-ml-model.md       # ML prediction models
-│   │   ├── stat-longitudinal.md   # Mixed models / MMRM
-│   │   ├── stat-bayesian.md       # Bayesian analysis
-│   │   ├── stat-mediation.md      # Mediation & interaction
-│   │   ├── stat-omics.md          # Multi-omics / bioinformatics
-│   │   ├── meta-analysis.md
-│   │   ├── systematic-review.md
-│   │   ├── bias-assessment.md
-│   │   ├── reporting-checklist.md
-│   │   └── protocol-review.md
-│   └── settings.json              # MCP servers + hooks
-├── .cursor/                       # Cursor IDE support (optional)
+│   ├── skills/ → ../skills            # symlink so Claude Code auto-loads skills
+│   └── settings.json                  # MCP servers + hooks
+├── .cursor/                            # Cursor IDE support
 │   ├── mcp.json
 │   └── rules/
 │       ├── clinical-research.mdc
-│       └── statistics.mdc
-├── subagents/                     # Specialized agent definitions
+│       ├── statistics.mdc
+│       └── skills-index.mdc           # catalog of all skills for Cursor
+├── subagents/                          # Specialized agent definitions
 │   ├── statistician.md
 │   ├── literature-reviewer.md
 │   └── protocol-checker.md
-└── examples/                      # Example outputs
+├── scripts/
+│   └── convert-commands-to-skills.sh  # legacy commands → skills migration
+└── examples/                           # Example outputs
     └── HCM_literature_review.md
 ```
 
@@ -203,14 +217,26 @@ pip install pyradiomics
 pip install matplotlib seaborn
 ```
 
-## IDE Support
+## Tool Support
 
-### Claude Code (Primary)
-Clone the repo. All 20 skills are available immediately.
+### Claude Code
+Clone the repo and run `claude`. All 20 skills are auto-discovered via
+`.claude/skills/` (symlinked to `skills/`). Invoke directly as
+`/pubmed-search`, `/stat-rct`, etc.
 
 ### Cursor
-`.cursor/rules/` contains clinical research and statistics rules that activate automatically.
-`.cursor/mcp.json` configures the PubMed MCP server.
+`.cursor/rules/clinical-research.mdc` and `statistics.mdc` activate
+automatically. `.cursor/rules/skills-index.mdc` catalogs all 20 skills
+and tells Cursor when to use each. Reference a skill in chat with
+`@skills/<name>/SKILL.md`. `.cursor/mcp.json` configures the PubMed MCP
+server.
+
+### Codex CLI
+`AGENTS.md` is auto-loaded and contains the skill catalog plus detailed
+statistical method reference. Codex does not auto-invoke skills — when
+a task matches, read the relevant `skills/<name>/SKILL.md` into context.
+PubMed MCP is not supported in Codex CLI; use direct API calls or the
+web equivalent for literature search.
 
 ## PubMed Integration
 
@@ -239,10 +265,16 @@ Without the API key, PubMed commands will still work but may be rate-limited.
 
 ## Contributing
 
-1. Add new skills as `.md` files in `.claude/commands/`
-2. Follow the existing skill format (see any `stat-*.md` as template)
+1. Add new skills as `skills/<name>/SKILL.md` with YAML frontmatter:
+   ```
+   ---
+   name: <skill-name>
+   description: <one-line summary — shown to all tools for dispatch>
+   ---
+   ```
+2. Follow the existing skill format (see any `skills/stat-*/SKILL.md` as template)
 3. Include: Input spec, method selection table, Python template code, output spec
-4. Update `CLAUDE.md` skill catalog and `AGENTS.md` method reference
+4. Update the skill catalog in `CLAUDE.md`, `AGENTS.md`, and `.cursor/rules/skills-index.mdc`
 
 ## License
 

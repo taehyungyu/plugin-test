@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "if": "Write(*.py)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[ClinicalResearch] Reminder: ensure statistical code includes assumption checks (normality, PH assumption, etc).'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__pubmed__search_articles",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[ClinicalResearch] PubMed search completed — verify MeSH terms and filter criteria before drawing conclusions.'"
+          }
+        ]
+      }
+    ]
+  }
+}

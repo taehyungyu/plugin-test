@@ -1,0 +1,12 @@
+{
+  "name": "clinical-research-harness",
+  "description": "Clinical research skills for study design, biostatistics, and evidence-based medicine",
+  "version": "0.1.0",
+  "author": {
+    "name": "VUNO RnD",
+    "email": "taehyung.yu@vuno.co"
+  },
+  "repository": "https://github.com/taehyungyu/plugin-test",
+  "license": "MIT",
+  "keywords": ["clinical-research", "biostatistics", "study-design", "evidence-based-medicine"]
+}

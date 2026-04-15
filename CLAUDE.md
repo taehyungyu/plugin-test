@@ -67,7 +67,14 @@ Match statistical methods to:
 9. Check against relevant reporting guidelines (`/reporting-checklist`)
 10. Review protocol completeness (`/protocol-review`)
 
-## Skills (Slash Commands)
+## Skills
+
+All clinical research capabilities are packaged as portable skills under the
+project-root `skills/` directory (each as `skills/<name>/SKILL.md`). The same
+skill files are reused across Claude Code, Cursor, and Codex CLI.
+
+In Claude Code, invoke any skill by name (e.g. `/pubmed-search`, `/stat-rct`) —
+the harness auto-loads them from `.claude/skills/` (a symlink to `skills/`).
 
 ### Research Planning
 `/pubmed-search`, `/study-design`, `/pico-extract`, `/sample-size`, `/protocol-review`
@@ -75,7 +82,7 @@ Match statistical methods to:
 ### Study-Design-Based Analysis
 `/stat-rct`, `/stat-cohort`, `/stat-case-control`, `/stat-diagnostic`, `/stat-survival`
 
-### Advanced Statistical Methods (NEW)
+### Advanced Statistical Methods
 - `/stat-propensity` — PSM, IPTW, AIPW, E-value, causal inference for observational studies
 - `/stat-ml-model` — ML prediction model development (RF, XGBoost, SVM), SHAP, radiomics, TRIPOD
 - `/stat-longitudinal` — MMRM, LMM, GLMM, GEE for repeated measures / longitudinal data
