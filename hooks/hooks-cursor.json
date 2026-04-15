@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "Write",
+        "if": "Write(*.py)",
+        "command": "./hooks/remind-assumptions"
+      }
+    ],
+    "postToolUse": [
+      {
+        "matcher": "mcp__pubmed__search_articles",
+        "command": "./hooks/pubmed-post-search"
+      }
+    ]
+  }
+}

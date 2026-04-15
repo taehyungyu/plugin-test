@@ -1,10 +1,12 @@
 # Clinical Research Harness
 
-A Claude Code plugin for clinical research — 20 skills, 3 agents, PubMed MCP
-integration. Install from a marketplace and get study design, biostatistics,
-and manuscript reporting capabilities.
+A plugin for clinical research — 20 skills, 3 agents, PubMed MCP integration.
+Works with **Claude Code** and **Cursor**. Install from a marketplace and get
+study design, biostatistics, and manuscript reporting capabilities.
 
 ## Quick Start
+
+### Claude Code
 
 ```bash
 # 1. Register the marketplace (once)
@@ -21,6 +23,16 @@ claude
 # /pico-extract HCM patients treated with mavacamten vs placebo, 24-week peak VO2 change
 # /stat-rct continuous primary endpoint, MMRM, 24-week multicenter trial
 ```
+
+### Cursor
+
+In Cursor Agent chat:
+
+```
+/add-plugin clinical-research-harness
+```
+
+Or search for "clinical-research-harness" in the plugin marketplace.
 
 ## What's Included
 
@@ -40,8 +52,10 @@ are **not** included — they are IDE-local configs that users set up themselves
 ```
 clinical-research-harness/
 ├── .claude-plugin/
-│   ├── plugin.json              # Plugin manifest (name, version, author)
+│   ├── plugin.json              # Claude Code manifest
 │   └── marketplace.json         # Marketplace catalog (for self-hosting)
+├── .cursor-plugin/
+│   └── plugin.json              # Cursor manifest (displayName + explicit paths)
 ├── skills/                      # 20 portable skill playbooks
 │   ├── pico-extract/SKILL.md
 │   ├── pubmed-search/SKILL.md
@@ -59,7 +73,10 @@ clinical-research-harness/
 │   ├── hello.md
 │   └── check-env.md
 ├── hooks/
-│   └── hooks.json               # PreToolUse + PostToolUse automation
+│   ├── hooks.json               # Claude Code hooks (PascalCase events)
+│   ├── hooks-cursor.json        # Cursor hooks (camelCase events, version: 1)
+│   ├── remind-assumptions       # Hook script: assumption check reminder
+│   └── pubmed-post-search       # Hook script: PubMed post-search hint
 ├── .mcp.json                    # PubMed MCP server config
 ├── CLAUDE.md                    # System prompt (loaded by Claude Code)
 ├── AGENTS.md                    # System prompt (loaded by Codex CLI)
