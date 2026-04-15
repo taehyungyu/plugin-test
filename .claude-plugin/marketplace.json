@@ -1,0 +1,22 @@
+{
+  "name": "vuno-rnd-marketplace",
+  "owner": {
+    "name": "VUNO RnD",
+    "email": "taehyung.yu@vuno.co"
+  },
+  "metadata": {
+    "description": "Clinical research plugins for VUNO RnD",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "clinical-research-harness",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/taehyungyu/plugin-test.git"
+      },
+      "description": "Clinical research skills for study design, biostatistics, and evidence-based medicine",
+      "version": "0.1.0"
+    }
+  ]
+}
