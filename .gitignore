@@ -1,13 +1,11 @@
-# Local Claude Code settings (user-specific overrides)
-.claude/settings.local.json
-CLAUDE.local.md
-
-# Claude Code auto-generated
-.claude/projects/
-
-# IDE
+# IDE-specific local configs (NOT part of plugin distribution)
+.claude/
+.cursor/
 .vscode/
 .idea/
+
+# Local overrides
+CLAUDE.local.md
 
 # Python
 __pycache__/

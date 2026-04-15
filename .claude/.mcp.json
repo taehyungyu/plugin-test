@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "arxiv": {
-      "command": "/home/taehyung.yu/.local/bin/uvx",
-      "args": ["arxiv-mcp-server"]
-    }
-  }
-}
